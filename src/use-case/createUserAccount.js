@@ -1,4 +1,12 @@
-const usersArr = [];
+const usersArr = [
+  {
+    id: 1,
+    name: "Uchiha Sasuke",
+    email: "sharingansemfronteiras@gmail.com",
+    password: "narutoeumbabaca4566",
+    createdDate: new Date("2023-01-02T13:56:21.510Z")
+  },
+];
 
 const createUserUseCase = (payload) => {
   const { name, email, password } = payload;
@@ -10,8 +18,9 @@ const createUserUseCase = (payload) => {
     createdDate: new Date(),
   }
 
-  usersArr = [...usersArr, newUser];
+  usersArr.push(newUser);
   return newUser;
 }
 
-export { usersArr, createUserUseCase }
+export default createUserUseCase;
+export { usersArr }
