@@ -6,7 +6,7 @@ const removeUserUseCase = (email) => {
   if (userByEmailIndex === -1) return false;
 
   usersArr.splice(userByEmailIndex, 1)
-  
+
   const userKeepStored = searchUserAccountByEmailUseCase(email);
   if(userKeepStored) return false;
 
