@@ -23,8 +23,27 @@ const create = async (req, res) => {
   return res.status(HTTPStatus.CREATED).json(response);
 }
 
+const edit = async (req, res) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const valid = validations.create(payload);
+  if (valid) return res.status(valid.status).send(valid.message);
+
+  const response = await AccountsModel.findByIdAndUpdate(id, payload);
+  return res.status(HTTPStatus.OK).json(response);
+}
+
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+
+  await AccountsModel.findByIdAndDelete(id);
+  return res.status(HTTPStatus.NO_CONTENT).end();
+}
+
 module.exports = {
   findAll,
   findOne,
   create,
+  edit,
+  deleteOne,
 }
