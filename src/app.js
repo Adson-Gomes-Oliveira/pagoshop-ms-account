@@ -13,8 +13,8 @@ app.use(cors());
 app.use(helmet());
 
 app.get('/health-test', (_req, res) => res.status(200).send('Connection OK'));
-app.use('/api/products', routes.productsRoutes);
-app.use('/api/admin/products', routes.productsAdminRoutes);
+app.use('/api/users', routes.usersRoutes);
+app.use('/api/admin/users', routes.usersAdminRoutes);
 
 app.use('/api-docs', swaggerUI.serve);
 app.get('/api-docs', swaggerUI.setup(swaggerDocument));

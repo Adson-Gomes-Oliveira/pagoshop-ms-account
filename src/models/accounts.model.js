@@ -16,7 +16,7 @@ const accountsMongooseSchema = new mongoose.Schema({
     city: {type: String, require: true},
     state: {type: String, require: true},
   },
-});
+}, { versionKey: false });
 
 const AccountsModel = mongoose.model('accounts', accountsMongooseSchema);
 module.exports = AccountsModel;
