@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-app.get('/health-test', (_req, res) => res.status(200).send('Connection OK'));
+app.get('/health-check', (_req, res) => res.status(200).send('Connection OK'));
 app.use('/api/users', routes.usersRoutes);
 app.use('/api/admin/users', routes.usersAdminRoutes);
 app.use(errorMiddleware);
