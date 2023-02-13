@@ -1,7 +1,8 @@
 const JOI = require('joi');
-const HTTPStatus = require('../../helpers/HTTP.status');
+const HTTPStatus = require('../helpers/HTTP.status');
+const customError = require('../helpers/error.custom');
 
-const create = (payload) => {
+const payload = (payload) => {
   const { error } = JOI.object({
     name: JOI.string().required(),
     email: JOI.string().email().required(),
@@ -17,10 +18,10 @@ const create = (payload) => {
     }
   }).validate(payload);
 
-  if (error) return { status: HTTPStatus.UN_ENTITY, message: error.message };
+  if (error) throw customError(error.message, HTTPStatus.UN_ENTITY);
   return null;
 }
 
 module.exports = {
-  create,
+  payload,
 }
