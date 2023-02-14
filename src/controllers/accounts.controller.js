@@ -27,7 +27,7 @@ const edit = async (req, res) => {
   const payload = req.body;
   validate.payload(payload);
 
-  const response = await AccountsModel.findByIdAndUpdate(id, payload);
+  const response = await AccountsModel.findByIdAndUpdate(id, payload, { new: true });
   return res.status(HTTPStatus.OK).json(response);
 }
 

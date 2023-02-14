@@ -6,7 +6,7 @@ const payload = (payload) => {
   const { error } = JOI.object({
     name: JOI.string().required(),
     email: JOI.string().email().required(),
-    password: JOI.string().min(8).pattern(new RegExp('^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#\$%\^&\*]).*$')).required(),
+    password: JOI.string().min(8).pattern(new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')).required(),
     cpf: JOI.number().required(),
     phone: JOI.number().required(),
     address: {

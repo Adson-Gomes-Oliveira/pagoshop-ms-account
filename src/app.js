@@ -14,8 +14,8 @@ app.use(cors());
 app.use(helmet());
 
 app.get('/health-check', (_req, res) => res.status(200).send('Connection OK'));
-app.use('/api/users', routes.usersRoutes);
-app.use('/api/admin/users', routes.usersAdminRoutes);
+app.use('/api/accounts', routes.accountsRoutes);
+app.use('/api/admin/accounts', routes.accountsAdminRoutes);
 app.use(errorMiddleware);
 
 app.use('/api-docs', swaggerUI.serve);
