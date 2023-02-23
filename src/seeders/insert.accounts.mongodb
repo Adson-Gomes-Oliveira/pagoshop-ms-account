@@ -1,0 +1,31 @@
+use('ecomm-account');
+db.accounts.insertMany([
+  {
+    name: "Rodrigo Freitas Maceno",
+    email: "rodrigo@example.com",
+    password: "senhasecreta",
+    cpf: "74136985202",
+    phone: "+5585988473528",
+    address: {
+      street: "Rua Veny, Bairro Central",
+      number: "155",
+      cep: "21189687",
+      city: "Betim",
+      state: "Minas Gerais"
+    }
+  },
+  {
+    name: "Letícia Freitas Albuquerque",
+    email: "leticia@example.com",
+    password: "senhasecreta01",
+    cpf: "47583214798",
+    phone: "+5511981574269",
+    address: {
+      street: "Rua Assis, Bairro Cabral",
+      number: "25",
+      cep: "89052977",
+      city: "São Paulo",
+      state: "São Paulo"
+    }
+  }
+]);
