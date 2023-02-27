@@ -5,14 +5,14 @@ const validate = require('../validations/accounts.validations');
 const findAll = async (_req, res) => {
   const response = await AccountsModel.find();
   return res.status(HTTPStatus.OK).json(response);
-}
+};
 
 const findOne = async (req, res) => {
   const { id } = req.params;
   const response = await AccountsModel.findById(id);
 
   return res.status(HTTPStatus.OK).json(response);
-}
+};
 
 const create = async (req, res) => {
   const payload = req.body;
@@ -20,7 +20,7 @@ const create = async (req, res) => {
 
   const response = await AccountsModel.create(payload);
   return res.status(HTTPStatus.CREATED).json(response);
-}
+};
 
 const edit = async (req, res) => {
   const { id } = req.params;
@@ -29,14 +29,14 @@ const edit = async (req, res) => {
 
   const response = await AccountsModel.findByIdAndUpdate(id, payload, { new: true });
   return res.status(HTTPStatus.OK).json(response);
-}
+};
 
 const deleteOne = async (req, res) => {
   const { id } = req.params;
 
   await AccountsModel.findByIdAndDelete(id);
   return res.status(HTTPStatus.NO_CONTENT).end();
-}
+};
 
 module.exports = {
   findAll,
@@ -44,4 +44,4 @@ module.exports = {
   create,
   edit,
   deleteOne,
-}
+};

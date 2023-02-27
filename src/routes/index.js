@@ -4,4 +4,4 @@ const accountsAdminRoutes = require('./accounts.admin.routes');
 module.exports = {
   accountsRoutes,
   accountsAdminRoutes,
-}
+};
