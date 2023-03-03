@@ -3,6 +3,10 @@ const accountsController = require('../controllers/accounts.controller');
 
 const router = Router();
 
+router.get('/', accountsController.findAll);
 router.get('/:id', accountsController.findOne);
+router.post('/', accountsController.create);
+router.put('/:id', accountsController.edit);
+router.delete('/:id', accountsController.deleteOne);
 
 module.exports = router;

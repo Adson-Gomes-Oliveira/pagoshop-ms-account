@@ -23,6 +23,7 @@ const create = async (req, res) => {
 };
 
 const edit = async (req, res) => {
+  console.log('CHEGUEEEEI');
   const { id } = req.params;
   const payload = req.body;
   validate.payload(payload);

@@ -5,7 +5,6 @@ const accountsMongooseSchema = new mongoose.Schema({
   name: { type: String, require: true },
   email: { type: String, require: true },
   password: { type: String, require: true },
-  created_at: { type: Date, require: true },
   cpf: { type: String, require: true },
   phone: { type: String, require: true },
   address: {
