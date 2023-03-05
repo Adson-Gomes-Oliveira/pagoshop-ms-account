@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { GenericContainer, Network } = require('testcontainers');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../src/app');
@@ -11,37 +10,14 @@ const {
 } = require('../mocks/accounts');
 
 describe('Testing accounts CRUD', () => {
-  let mongoContainer = '';
-  let apiContainer = '';
-  let network = '';
-  jest.setTimeout(20000);
-
   beforeAll(async () => {
-    network = await new Network({ name: 'test-account-ecomm' }).start();
-
-    mongoContainer = await new GenericContainer('mongo:5')
-      .withName('test_mongo_ecomm_accounts')
-      .withExposedPorts(27017)
-      .withEnvironment('MONGO_INITDB_ROOT_USERNAME', 'root')
-      .withEnvironment('MONGO_INITDB_ROOT_PASSWORD', 'secret')
-      .withNetworkMode(network.getName())
-      .start();
-
-    apiContainer = await new GenericContainer('ecommerce_account-container')
-      .withExposedPorts(3002)
-      .withEnvironment('DB_HOST', 'test_mongo_ecomm_accounts')
-      .withNetworkMode(network.getName())
-      .start();
-
-    await mongoose.connect('mongodb://root:secret@127.0.0.1:27017/test_mongo_ecomm_accounts?authSource=admin');
+    await mongoose.connect('mongodb://root:secret@127.0.0.1:27018/test_ecomm_accounts?authSource=admin');
     await AccountsModel.create(ACCOUNT_MOCK_PAYLOAD);
   });
 
   afterAll(async () => {
+    await AccountsModel.deleteMany();
     await mongoose.connection.close();
-    await apiContainer.stop();
-    await mongoContainer.stop();
-    await network.stop();
   });
 
   it('GET: A list of accounts should be returned', async () => {
