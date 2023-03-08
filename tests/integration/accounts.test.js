@@ -7,7 +7,7 @@ const AccountsModel = require('../../src/models/accounts.model');
 const {
   ACCOUNT_MOCK_INSTANCE,
   ACCOUNT_MOCK_PAYLOAD,
-} = require('../mocks/accounts');
+} = require('../mocks/accounts.mock');
 
 describe('Testing accounts CRUD', () => {
   beforeAll(async () => {
@@ -25,8 +25,6 @@ describe('Testing accounts CRUD', () => {
     const response = await request(app)
       .get('/api/accounts')
       .expect(HTTPStatus.OK);
-
-    console.log(response.body);
 
     expect(response.body.length >= 0).toBe(true);
     properties.forEach((prop) => {

@@ -5,7 +5,7 @@ const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const accountRoutes = require('./routes/accounts.routes');
 const errorMiddleware = require('./middlewares/error.middleware');
-const swaggerDocument = require('../swagger/accounts-swagger.json');
+const swaggerDocument = require('../accounts-swagger.json');
 
 const app = express();
 
