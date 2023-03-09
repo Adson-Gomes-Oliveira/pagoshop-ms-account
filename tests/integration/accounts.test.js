@@ -42,7 +42,7 @@ describe('Testing accounts CRUD', () => {
     expect(response.body).toHaveProperty('address');
     expect(response.body.address).toHaveProperty('street');
     delete response.body._id;
-    expect(response.body).toEqual(ACCOUNT_MOCK_PAYLOAD);
+    expect(response.body).toEqual({ ...ACCOUNT_MOCK_PAYLOAD, password: response.body.password });
   });
 
   it('PUT: A account should be edited', async () => {

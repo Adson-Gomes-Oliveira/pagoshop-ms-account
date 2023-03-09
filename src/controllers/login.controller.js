@@ -1,11 +1,11 @@
+const { generateToken } = require('../helpers/token.jwt');
 const HTTPStatus = require('../helpers/HTTP.status');
-const loginServices = require('../services/login.service');
 
 const login = async (req, res) => {
-  const payload = req.body;
-  const token = await loginServices.login(payload);
+  const token = generateToken(req.user.toJSON());
 
-  return res.status(HTTPStatus.OK).json({ token });
+  res.set('Authorization', token);
+  return res.status(HTTPStatus.NO_CONTENT).end();
 };
 
 module.exports = {

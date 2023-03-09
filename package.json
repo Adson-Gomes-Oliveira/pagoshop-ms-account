@@ -23,9 +23,13 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
+    "passport": "^0.6.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
     "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "eslint": "^8.35.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",

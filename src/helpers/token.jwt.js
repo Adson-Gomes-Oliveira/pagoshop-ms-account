@@ -15,6 +15,8 @@ const generateToken = (jwtPayload) => {
 const verifyToken = (token) => {
   const verify = JWT.verify(token, process.env.JWT_SECRET);
   if (!verify) throw new CustomError('Token is invalid !', HTTPStatus.UNAUTHORIZED);
+
+  return verify;
 };
 
 module.exports = {

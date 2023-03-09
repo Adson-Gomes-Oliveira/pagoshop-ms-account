@@ -29,3 +29,6 @@ db.accounts.insertMany([
     }
   }
 ]);
+
+use('ecomm-account');
+db.accounts.deleteMany({});
