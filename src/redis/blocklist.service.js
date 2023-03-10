@@ -8,17 +8,12 @@ const addToken = async (token) => {
   const tokenExpirationDate = JWT.decode(token).exp;
   const tokenHash = generateTokenHash(token);
   await blocklist.set(tokenHash, '');
-  const tokenExists = await blocklist.exists(tokenHash);
-  console.log(tokenHash);
-  console.log(tokenExists);
   await blocklist.expireAt(tokenHash, tokenExpirationDate);
 };
 
 const verifyTokenInBlocklist = async (token) => {
   const tokenHash = generateTokenHash(token);
   const tokenExists = await blocklist.exists(tokenHash);
-  console.log(tokenHash);
-  console.log(tokenExists);
   return tokenExists;
 };
 
