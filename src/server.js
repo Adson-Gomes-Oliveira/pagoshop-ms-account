@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 require('dotenv/config');
+require('./redis/blocklist');
 
 const PORT = process.env.PORT || 3002;
 const USER = process.env.DB_USER || 'root';
