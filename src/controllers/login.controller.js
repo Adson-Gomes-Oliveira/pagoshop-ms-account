@@ -5,7 +5,7 @@ const login = async (req, res) => {
   const token = generateToken(req.user.toJSON());
 
   res.set('Authorization', token);
-  return res.status(HTTPStatus.NO_CONTENT).end();
+  return res.status(HTTPStatus.OK).json({ token });
 };
 
 module.exports = {
