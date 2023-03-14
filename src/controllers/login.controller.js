@@ -6,7 +6,13 @@ const login = async (req, res) => {
   const token = generateToken(req.user.toJSON());
 
   res.set('Authorization', token);
-  return res.status(HTTPStatus.OK).json({ token });
+  return res
+    .status(HTTPStatus.OK)
+    .set('Authorization', `Bearer ${token}`)
+    .json({
+      userId: req.user._id,
+      name: req.user.name,
+    });
 };
 
 const loggout = async (req, res) => {
