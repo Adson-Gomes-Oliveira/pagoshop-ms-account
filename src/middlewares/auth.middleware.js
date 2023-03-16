@@ -31,13 +31,17 @@ passport.use(
 passport.use(
   new BearerStrategy(
     async (token, done) => {
-      const tokenExists = await blocklist.verifyTokenInBlocklist(token);
-      if (tokenExists) return done(CustomError('Token logged out !', HTTPStatus.BAD_REQUEST));
+      try {
+        const tokenExists = await blocklist.verifyTokenInBlocklist(token);
+        if (tokenExists) return done(CustomError('Token logged out !', HTTPStatus.BAD_REQUEST));
 
-      const user = verifyToken(token);
+        const user = verifyToken(token);
 
-      request.token = token;
-      return done(null, user);
+        request.token = token;
+        return done(null, user);
+      } catch (err) {
+        return done(err.message);
+      }
     },
   ),
 );
