@@ -6,7 +6,7 @@ require('dotenv');
 const generateToken = (jwtPayload) => {
   const token = JWT.sign(jwtPayload, process.env.JWT_SECRET, {
     algorithm: 'HS256',
-    expiresIn: '1h',
+    expiresIn: '1d',
   });
 
   return token;
