@@ -2,25 +2,18 @@
 const axios = require('axios');
 const request = require('supertest');
 const mongoose = require('mongoose');
-// const redis = require('redis');
 const app = require('../../src/app');
 const HTTPStatus = require('../../src/helpers/HTTP.status');
 const AccountsModel = require('../../src/models/accounts.model');
 const {
   ACCOUNT_MOCK_INSTANCE,
   ACCOUNT_MOCK_PAYLOAD,
+  LOGIN_MOCK_PAYLOAD,
 } = require('../mocks/accounts.mock');
 
 describe('Testing accounts CRUD', () => {
   let token = '';
-  // const client = redis.createClient({
-  //   socket: {
-  //     host: process.env.REDIS_HOST || '127.0.0.1',
-  //     port: '6380',
-  //   },
-  //   prefix: 'blocklist:',
-  // });
-
+  let tokenForLogout = '';
   beforeAll(async () => {
     await mongoose.connect('mongodb://root:secret@127.0.0.1:27018/test_ecomm_accounts?authSource=admin');
     await AccountsModel.create(ACCOUNT_MOCK_PAYLOAD);
@@ -30,14 +23,40 @@ describe('Testing accounts CRUD', () => {
       password: '@Raven132pp87',
     });
 
-    // client.connect();
     token = response.headers.authorization;
   });
 
   afterAll(async () => {
-    // client.end(true);
     await AccountsModel.deleteMany();
     await mongoose.connection.close();
+  });
+
+  it('POST: The Login should be done with success', async () => {
+    const response = await request(app)
+      .post('/api/accounts/login')
+      .send(LOGIN_MOCK_PAYLOAD);
+
+    console.log(response);
+
+    expect(typeof response.headers.authorization).toBe('string');
+    expect(response.headers.authorization.includes('Bearer')).toBe(true);
+
+    tokenForLogout = response.headers.authorization;
+
+    expect(response.body).toHaveProperty('userId');
+    expect(response.body).toHaveProperty('name');
+  });
+
+  it('GET: The logout should be done with sucess', async () => {
+    await request(app)
+      .get('/api/accounts/logout')
+      .set('Authorization', tokenForLogout)
+      .expect(HTTPStatus.NO_CONTENT);
+
+    await request(app)
+      .get('/api/accounts')
+      .set('Authorization', tokenForLogout)
+      .expect(HTTPStatus.BAD_REQUEST);
   });
 
   it('GET: A list of accounts should be returned', async () => {
