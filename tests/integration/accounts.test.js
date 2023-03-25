@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+const axios = require('axios');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../src/app');
@@ -7,12 +8,22 @@ const AccountsModel = require('../../src/models/accounts.model');
 const {
   ACCOUNT_MOCK_INSTANCE,
   ACCOUNT_MOCK_PAYLOAD,
+  LOGIN_MOCK_PAYLOAD,
 } = require('../mocks/accounts.mock');
 
 describe('Testing accounts CRUD', () => {
+  let token = '';
+  let tokenForLogout = '';
   beforeAll(async () => {
     await mongoose.connect('mongodb://root:secret@127.0.0.1:27018/test_ecomm_accounts?authSource=admin');
     await AccountsModel.create(ACCOUNT_MOCK_PAYLOAD);
+
+    const response = await axios.post('http://127.0.0.1:3002/api/accounts/login', {
+      email: 'adsongoliveira2022@outlook.com',
+      password: '@Raven132pp87',
+    });
+
+    token = response.headers.authorization;
   });
 
   afterAll(async () => {
@@ -20,10 +31,39 @@ describe('Testing accounts CRUD', () => {
     await mongoose.connection.close();
   });
 
+  it('POST: The Login should be done with success', async () => {
+    const response = await request(app)
+      .post('/api/accounts/login')
+      .send(LOGIN_MOCK_PAYLOAD);
+
+    console.log(response);
+
+    expect(typeof response.headers.authorization).toBe('string');
+    expect(response.headers.authorization.includes('Bearer')).toBe(true);
+
+    tokenForLogout = response.headers.authorization;
+
+    expect(response.body).toHaveProperty('userId');
+    expect(response.body).toHaveProperty('name');
+  });
+
+  it('GET: The logout should be done with sucess', async () => {
+    await request(app)
+      .get('/api/accounts/logout')
+      .set('Authorization', tokenForLogout)
+      .expect(HTTPStatus.NO_CONTENT);
+
+    await request(app)
+      .get('/api/accounts')
+      .set('Authorization', tokenForLogout)
+      .expect(HTTPStatus.BAD_REQUEST);
+  });
+
   it('GET: A list of accounts should be returned', async () => {
     const properties = Object.keys(ACCOUNT_MOCK_INSTANCE);
     const response = await request(app)
       .get('/api/accounts')
+      .set('Authorization', token)
       .expect(HTTPStatus.OK);
 
     expect(response.body.length >= 0).toBe(true);
@@ -35,6 +75,7 @@ describe('Testing accounts CRUD', () => {
   it('POST: A account should be created', async () => {
     const response = await request(app)
       .post('/api/accounts')
+      .set('Authorization', token)
       .send(ACCOUNT_MOCK_PAYLOAD)
       .expect(HTTPStatus.CREATED);
 
@@ -54,11 +95,13 @@ describe('Testing accounts CRUD', () => {
 
     const responsePost = await request(app)
       .post('/api/accounts')
+      .set('Authorization', token)
       .send(ACCOUNT_MOCK_PAYLOAD)
       .expect(HTTPStatus.CREATED);
 
     const responsePut = await request(app)
       .put(`/api/accounts/${responsePost.body._id}`)
+      .set('Authorization', token)
       .send(NEW_ACCOUNT_MOCK_PAYLOAD)
       .expect(HTTPStatus.OK);
 
@@ -72,11 +115,13 @@ describe('Testing accounts CRUD', () => {
   it('DELETE: A account should be deleted', async () => {
     const response = await request(app)
       .post('/api/accounts')
+      .set('Authorization', token)
       .send(ACCOUNT_MOCK_PAYLOAD)
       .expect(HTTPStatus.CREATED);
 
     await request(app)
       .delete(`/api/accounts/${response.body._id}`)
+      .set('Authorization', token)
       .expect(HTTPStatus.NO_CONTENT);
   });
 });

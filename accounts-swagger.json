@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Ecommerce Users - OpenAPI 3.0",
-    "description": "API do Ecommerce desenvolvido durante o curso da Alura.",
+    "title": "Ecommerce PagoShop - Accounts",
+    "description": "API do Ecommerce PagoShop, veja a documentação em [Ecommerce Repo Docs](https://github.com/Adson-Gomes-Oliveira/Ecommerce).",
     "contact": {
       "email": "adsongoliveira2022@outlook.com",
       "name": "Desenvolvedor"
@@ -11,7 +11,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "0.0.1"
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -20,17 +20,137 @@
   ],
   "tags": [
     {
-      "name": "users",
+      "name": "authentication",
+      "description": "Realizar login ou logout"
+    },
+    {
+      "name": "accounts",
       "description": "Operações relacionadas aos usuários do Ecommerce"
     }
   ],
   "paths": {
-    "/api/admin/users": {
+    "/api/accounts/login": {
       "post": {
         "tags": [
-          "users"
+          "authentication"
+        ],
+        "summary": "Realiza login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/api/accounts/logout": {
+      "get": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Realiza logout",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/api/accounts": {
+      "get": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Retorna uma lista de usuários",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "accounts"
         ],
         "summary": "Cadastra um novo usuário",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -42,7 +162,7 @@
         },
         "responses": {
           "201": {
-            "description": "Successfully Created",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -63,35 +183,17 @@
         }
       }
     },
-    "/api/users": {
+    "/api/accounts/{id}": {
       "get": {
         "tags": [
-          "users"
-        ],
-        "summary": "Retorna uma lista de usuários",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Users"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/api/users/{id}": {
-      "get": {
-        "tags": [
-          "users"
+          "accounts"
         ],
         "summary": "Retorna um usuário pelo ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/IdParam"
@@ -111,6 +213,9 @@
           "400": {
             "$ref": "#/components/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
@@ -118,14 +223,17 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
-      }
-    },
-    "/api/admin/users/{id}": {
+      },
       "put": {
         "tags": [
-          "users"
+          "accounts"
         ],
         "summary": "Alterar um usuário",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/IdParam"
@@ -142,7 +250,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully Edited",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -167,9 +275,14 @@
       },
       "delete": {
         "tags": [
-          "users"
+          "accounts"
         ],
         "summary": "Deletar usuário",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/IdParam"
@@ -177,7 +290,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Successfully Deleted"
+            "description": "Success"
           },
           "400": {
             "$ref": "#/components/responses/BadRequest"
@@ -196,6 +309,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Users": {
         "type": "array",
@@ -223,13 +343,13 @@
             "address": {
               "type": "object",
               "properties": {
-                "street_address": {
+                "street": {
                   "type": "string"
                 },
-                "number_address": {
+                "number": {
                   "type": "integer"
                 },
-                "more_info_address": {
+                "more_info": {
                   "type": "string"
                 },
                 "cep": {
@@ -270,13 +390,13 @@
           "address": {
             "type": "object",
             "properties": {
-              "street_address": {
+              "street": {
                 "type": "string"
               },
-              "number_address": {
+              "number": {
                 "type": "integer"
               },
-              "more_info_address": {
+              "more_info": {
                 "type": "string"
               },
               "cep": {
@@ -289,10 +409,6 @@
                 "type": "string"
               }
             }
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -317,13 +433,13 @@
           "address": {
             "type": "object",
             "properties": {
-              "street_address": {
+              "street": {
                 "type": "string"
               },
-              "number_address": {
+              "number": {
                 "type": "integer"
               },
-              "more_info_address": {
+              "more_info": {
                 "type": "string"
               },
               "cep": {
@@ -358,7 +474,7 @@
       "IdParam": {
         "name": "id",
         "in": "path",
-        "description": "ID da categoria",
+        "description": "ID do user",
         "required": true,
         "schema": {
           "type": "integer"

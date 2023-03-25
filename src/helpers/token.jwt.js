@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken');
 const CustomError = require('./error.custom');
 const HTTPStatus = require('./HTTP.status');
-require('dotenv');
+require('dotenv').config();
 
 const generateToken = (jwtPayload) => {
   const token = JWT.sign(jwtPayload, process.env.JWT_SECRET, {

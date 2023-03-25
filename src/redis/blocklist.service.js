@@ -6,6 +6,7 @@ const generateTokenHash = (token) => crypto.createHash('sha256').update(token).d
 
 const addToken = async (token) => {
   const tokenExpirationDate = JWT.decode(token).exp;
+  console.log(tokenExpirationDate);
   const tokenHash = generateTokenHash(token);
   await blocklist.set(tokenHash, '');
   await blocklist.expireAt(tokenHash, tokenExpirationDate);

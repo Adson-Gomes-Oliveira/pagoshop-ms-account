@@ -13,7 +13,7 @@ router.use(passport.authenticate('bearer', { session: false }));
 router.get('/', accountsController.findAll);
 router.get('/logout', loginController.loggout);
 router.get('/:id', accountsController.findOne);
-router.put('/:id', accountsController.edit);
+router.put('/:id', accountsController.update);
 router.delete('/:id', accountsController.deleteOne);
 
 module.exports = router;
