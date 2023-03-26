@@ -19,8 +19,8 @@ describe('Testing accounts CRUD', () => {
     await AccountsModel.create(ACCOUNT_MOCK_PAYLOAD);
 
     const response = await axios.post('http://127.0.0.1:3002/api/accounts/login', {
-      email: 'adsongoliveira2022@outlook.com',
-      password: '@Raven132pp87',
+      email: 'danilo@example.com',
+      password: '@Danilo777Password',
     });
 
     token = response.headers.authorization;
@@ -34,9 +34,8 @@ describe('Testing accounts CRUD', () => {
   it('POST: The Login should be done with success', async () => {
     const response = await request(app)
       .post('/api/accounts/login')
-      .send(LOGIN_MOCK_PAYLOAD);
-
-    console.log(response);
+      .send(LOGIN_MOCK_PAYLOAD)
+      .expect(HTTPStatus.OK);
 
     expect(typeof response.headers.authorization).toBe('string');
     expect(response.headers.authorization.includes('Bearer')).toBe(true);
