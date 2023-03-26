@@ -7,9 +7,10 @@ const USER = process.env.DB_USER || 'root';
 const PASSWORD = process.env.DB_PASSWORD || 'secret';
 const HOST = process.env.DB_HOST || '127.0.0.1';
 const DATABASE = process.env.DB_NAME || 'ecomm-account';
+const DB_PORT = process.env.DB_PORT || '27018';
 
 const createMain = async () => {
-  await mongoose.connect(`mongodb://${USER}:${PASSWORD}@${HOST}:27017/${DATABASE}?authSource=admin`)
+  await mongoose.connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${DB_PORT}/${DATABASE}?authSource=admin`)
     .then(() => {})
     .catch((error) => console.error(error));
 
