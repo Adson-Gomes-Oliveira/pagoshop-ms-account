@@ -13,6 +13,13 @@ const findOne = async (req, res) => {
   return res.status(HTTPStatus.OK).json(response);
 };
 
+const findOneByEmail = async (req, res) => {
+  const { email } = req.body;
+  const response = await AccountsServices.findOneByEmail(email);
+
+  return res.status(HTTPStatus.OK).json(response);
+};
+
 const create = async (req, res) => {
   const payload = req.body;
 
@@ -38,6 +45,7 @@ const deleteOne = async (req, res) => {
 module.exports = {
   findAll,
   findOne,
+  findOneByEmail,
   create,
   update,
   deleteOne,

@@ -12,6 +12,11 @@ const findOne = async (id) => {
   return account;
 };
 
+const findOneByEmail = async (email) => {
+  const account = await AccountsModel.findOne({ email });
+  return account;
+};
+
 const create = async (payload) => {
   validate.payload(payload);
 
@@ -36,6 +41,7 @@ const deleteOne = async (id) => {
 module.exports = {
   findAll,
   findOne,
+  findOneByEmail,
   create,
   update,
   deleteOne,
