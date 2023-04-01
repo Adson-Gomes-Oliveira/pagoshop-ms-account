@@ -20,7 +20,7 @@ services:
   mongodb-ms-account:
     image: mongo:5
     ports:
-      - 27017:27017
+      - 27019:27017
     volumes:
       - mongodb-account-volume-docker:/data/db
     environment:
@@ -30,7 +30,7 @@ services:
   mongodb-ms-account-test:
     image: mongo:5
     ports:
-      - 27018:27017
+      - 27020:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=secret
