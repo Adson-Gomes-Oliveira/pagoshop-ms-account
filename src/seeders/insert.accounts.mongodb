@@ -1,4 +1,4 @@
-use('ecomm-account');
+use('ms-account');
 db.accounts.insertMany([
   {
     name: "Rodrigo Freitas Maceno",
@@ -11,7 +11,8 @@ db.accounts.insertMany([
       number: "155",
       cep: "21189687",
       city: "Betim",
-      state: "Minas Gerais"
+      state: "Minas Gerais",
+      more_info: "Terceira casa ao lado da avenida"
     }
   },
   {
@@ -25,10 +26,23 @@ db.accounts.insertMany([
       number: "25",
       cep: "89052977",
       city: "São Paulo",
-      state: "São Paulo"
+      state: "São Paulo",
+      more_info: "Terceira casa ao lado da avenida"
     }
   }
 ]);
 
-use('ecomm-account');
+use('ms-account');
 db.accounts.deleteMany({});
+
+use('ms-account');
+db.accounts.updateOne(
+  { name: "Rodrigo Freitas Maceno" },
+  { $set: {
+      more_info: "Terceira casa"
+    }
+  }
+)
+
+use('ms-account');
+db.accounts.find();

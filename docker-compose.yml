@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  trooper-ms-product:
+  trooper-ms-account:
     container_name: ms-account
     build: ./
     ports:
@@ -37,3 +37,8 @@ services:
 
 volumes:
   mongodb-account-volume-docker:
+
+networks: 
+  default:
+    name: trooper-network
+    external: true
