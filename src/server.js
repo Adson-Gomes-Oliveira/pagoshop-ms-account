@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 const app = require('./app');
+const getClientByOrder = require('./services/getClientByOrder.consumer.service');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3002;
@@ -13,4 +14,7 @@ mongoose.connect(`mongodb://${USER}:${PASSWORD}@${HOST}:27017/${DATABASE}?authSo
   .then(() => {})
   .catch((error) => console.error(error));
 
-app.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`));
+app.listen(PORT, () => {
+  getClientByOrder('orderProcessAccount', 'orderConfirmationToProcess');
+  console.log(`Server is listening on port: ${PORT}`);
+});
