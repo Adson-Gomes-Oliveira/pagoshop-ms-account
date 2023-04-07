@@ -19,7 +19,7 @@ const getClientByOrder = async (queue, exchange) => {
           cpf: account.cpf,
           buyerAddress: account.address,
         },
-        processHash: actualMessage.processHash,
+        invoiceId: actualMessage.invoiceId,
       });
       consumerChannel.ack(msg);
     }
