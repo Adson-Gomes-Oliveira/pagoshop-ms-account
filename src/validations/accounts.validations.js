@@ -20,7 +20,7 @@ const payload = (payloadToValidate) => {
     },
   }).validate(payloadToValidate);
 
-  if (error) throw customError(error.message, HTTPStatus.UN_ENTITY);
+  if (error) throw customError(error.message.replace(/\\|"/g, ''), HTTPStatus.UN_ENTITY);
 };
 
 module.exports = {

@@ -1,19 +1,34 @@
 const AccountsModel = require('../models/accounts.model');
 const validate = require('../validations/accounts.validations');
 const encrypt = require('../helpers/encrypt');
+const CustomError = require('../helpers/error.custom');
+const HTTPStatus = require('../helpers/HTTP.status');
 
 const findAll = async () => {
   const accountList = await AccountsModel.find();
+
+  if (accountList.length === 0) throw CustomError('Content not found', HTTPStatus.NOT_FOUND);
+
   return accountList;
 };
 
 const findOne = async (id) => {
+  if (typeof id === 'undefined') throw CustomError('Id not found', HTTPStatus.BAD_REQUEST);
+
   const account = await AccountsModel.findById(id);
+
+  if (!account) throw CustomError('Content not found', HTTPStatus.NOT_FOUND);
+
   return account;
 };
 
 const findOneByEmail = async (email) => {
+  if (typeof email === 'undefined') throw CustomError('Email not found', HTTPStatus.BAD_REQUEST);
+
   const account = await AccountsModel.findOne({ email });
+
+  if (!account) throw CustomError('Content not found', HTTPStatus.NOT_FOUND);
+
   return account;
 };
 

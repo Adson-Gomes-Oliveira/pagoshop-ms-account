@@ -18,6 +18,7 @@ describe('Testing Accounts Controllers', () => {
 
     jest.spyOn(AccountsServices, 'findAll').mockResolvedValue([ACCOUNT_MOCK_INSTANCE]);
     jest.spyOn(AccountsServices, 'findOne').mockResolvedValue(ACCOUNT_MOCK_INSTANCE);
+    jest.spyOn(AccountsServices, 'findOneByEmail').mockResolvedValue(ACCOUNT_MOCK_INSTANCE);
     jest.spyOn(AccountsServices, 'create').mockResolvedValue(ACCOUNT_MOCK_INSTANCE);
     jest.spyOn(AccountsServices, 'update').mockResolvedValue({ ...ACCOUNT_MOCK_INSTANCE, name: 'Admin' });
     jest.spyOn(AccountsServices, 'deleteOne').mockResolvedValue();
@@ -32,20 +33,26 @@ describe('Testing Accounts Controllers', () => {
     expect(response.status).toHaveBeenCalledWith(HTTPStatus.OK);
   });
 
-  it('GET: When a account is requested the status code 200 must be returned', async () => {
+  it('GET: When an account is requested the status code 200 must be returned', async () => {
     request.params = ACCOUNT_MOCK_INSTANCE._id;
     await AccountsControllers.findOne(request, response);
     expect(response.status).toHaveBeenCalledWith(HTTPStatus.OK);
   });
 
-  it('POST: When a account is created the status code 201 must be returned with the correct data', async () => {
+  it('GET: When an account is requested by email the status code 200 must be returned', async () => {
+    request.body = ACCOUNT_MOCK_PAYLOAD;
+    await AccountsControllers.findOneByEmail(request, response);
+    expect(response.status).toHaveBeenCalledWith(HTTPStatus.OK);
+  });
+
+  it('POST: When an account is created the status code 201 must be returned with the correct data', async () => {
     request.body = ACCOUNT_MOCK_PAYLOAD;
     await AccountsControllers.create(request, response);
     expect(response.status).toHaveBeenCalledWith(HTTPStatus.CREATED);
     expect(response.json).toHaveBeenCalledWith(ACCOUNT_MOCK_INSTANCE);
   });
 
-  it('PUT: When a account is updated the status code 200 must be returned with the correct data', async () => {
+  it('PUT: When an account is updated the status code 200 must be returned with the correct data', async () => {
     request.params = ACCOUNT_MOCK_INSTANCE._id;
     request.body = { ...ACCOUNT_MOCK_INSTANCE, name: 'Admin' };
     await AccountsControllers.update(request, response);
@@ -53,7 +60,7 @@ describe('Testing Accounts Controllers', () => {
     expect(response.json).toHaveBeenCalledWith({ ...ACCOUNT_MOCK_INSTANCE, name: 'Admin' });
   });
 
-  it('DELETE: When a account is deleted the status code 203 must be returned', async () => {
+  it('DELETE: When an account is deleted the status code 203 must be returned', async () => {
     request.params = ACCOUNT_MOCK_INSTANCE._id;
     await AccountsControllers.deleteOne(request, response);
     expect(response.status).toHaveBeenCalledWith(HTTPStatus.NO_CONTENT);
