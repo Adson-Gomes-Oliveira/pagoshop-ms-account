@@ -10,7 +10,7 @@ const accountsMongooseSchema = new mongoose.Schema({
   address: {
     street: { type: String, require: true },
     number: { type: String, require: true },
-    more_info: { type: String, require: true },
+    moreInfo: { type: String, require: true },
     cep: { type: String, require: true },
     city: { type: String, require: true },
     state: { type: String, require: true },
