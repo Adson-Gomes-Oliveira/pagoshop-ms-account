@@ -17,6 +17,7 @@ const getClientByOrder = async (queue, exchange) => {
       const account = await AccountsServices.findOne(actualMessage.orderData.clientId);
       sendClientToInvoice('invoiceCreation', {
         messageContent: {
+          email: account.email,
           name: account.name,
           cpf: account.cpf,
           buyerAddress: account.address,
