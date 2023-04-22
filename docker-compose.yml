@@ -8,12 +8,6 @@ services:
     volumes:
       - ./:/app/ms-account
     environment:
-      - PORT=3002
-      - DB_HOST=mongodb-ms-account
-      - DB_USER=root
-      - DB_PASSWORD=secret
-      - DB_NAME=ms-account
-      - DB_PORT=27017
       - JWT_SECRET=MTk4OGExOTZkMWYyOWZjZjlmOTcwMWVjZWRjMzc1MzZkOGM0MmFjMjQ0NjcyZjIzZDQwOGU4YTQ1YWQ3NTRjZA==
     depends_on:
       - mongodb-ms-account

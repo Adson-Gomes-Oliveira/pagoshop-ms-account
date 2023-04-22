@@ -7,10 +7,11 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3002;
 const USER = process.env.DB_USER || 'root';
 const PASSWORD = process.env.DB_PASSWORD || 'secret';
-const HOST = process.env.DB_HOST || '127.0.0.1:27019';
-const DATABASE = process.env.DB_DATABASE || 'ecomm-account?authSource=admin';
+const HOST = process.env.DB_HOST || 'mongodb-ms-account:27017';
+const DATABASE = process.env.DB_DATABASE || 'ms-account?authSource=admin';
+const MONGO_INITIAL = process.env.MONGO_INITIAL || 'mongodb';
 
-mongoose.connect(`mongodb+srv://${USER}:${PASSWORD}@${HOST}/${DATABASE}`)
+mongoose.connect(`${MONGO_INITIAL}://${USER}:${PASSWORD}@${HOST}/${DATABASE}`)
   .then(() => {})
   .catch((error) => console.error(error));
 
