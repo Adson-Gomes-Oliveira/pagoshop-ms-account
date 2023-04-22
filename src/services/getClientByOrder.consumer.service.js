@@ -1,9 +1,12 @@
 const amqplib = require('amqplib');
 const AccountsServices = require('./accounts.service');
 const sendClientToInvoice = require('./sendClientToInvoice.producer.service');
+require('dotenv').config();
+
+const RABBIT_MQ_CONNECT = process.env.RABBIT_STRING || 'amqp://guest:guest@rabbit-ms-gateway:5672';
 
 const getClientByOrder = async (queue, exchange) => {
-  const connectionMQ = await amqplib.connect('amqp://guest:guest@rabbit-ms-gateway:5672');
+  const connectionMQ = await amqplib.connect(RABBIT_MQ_CONNECT);
   const consumerChannel = await connectionMQ.createChannel();
   await consumerChannel.assertExchange(exchange, 'fanout', { durable: true });
   await consumerChannel.assertQueue(queue, { durable: true });
