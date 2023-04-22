@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3002;
 const USER = process.env.DB_USER || 'root';
 const PASSWORD = process.env.DB_PASSWORD || 'secret';
 const HOST = process.env.DB_HOST || '127.0.0.1:27019';
-const DATABASE = process.env.DB_NAME || 'ecomm-account?authSource=admin';
+const DATABASE = process.env.DB_DATABASE || 'ecomm-account?authSource=admin';
 
 mongoose.connect(`mongodb://${USER}:${PASSWORD}@${HOST}/${DATABASE}`)
   .then(() => {})
