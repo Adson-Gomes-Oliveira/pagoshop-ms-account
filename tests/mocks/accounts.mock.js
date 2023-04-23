@@ -10,7 +10,7 @@ const ACCOUNT_MOCK_INSTANCE = {
   address: {
     street: 'Rua B',
     number: '155',
-    more_info: 'no_info',
+    moreInfo: 'no_info',
     cep: '75882196',
     city: 'Uberaba',
     state: 'MG',
@@ -26,7 +26,7 @@ const ACCOUNT_MOCK_PAYLOAD = {
   address: {
     street: 'Rua B',
     number: '155',
-    more_info: 'no_info',
+    moreInfo: 'no_info',
     cep: '75882196',
     city: 'Uberaba',
     state: 'MG',
