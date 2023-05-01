@@ -45,6 +45,16 @@ describe('Testing accounts CRUD', () => {
     expect(response.body).toEqual({ ...ACCOUNT_MOCK_PAYLOAD, password: response.body.password });
   });
 
+  it('POST: An account should not be created with wrong data', async () => {
+    const { name: _, ...accountWithoutName } = ACCOUNT_MOCK_PAYLOAD;
+    const response = await request(app)
+      .post('/api/accounts')
+      .send(accountWithoutName)
+      .expect(HTTPStatus.UN_ENTITY);
+
+    expect(response.text).toBe('name is required');
+  });
+
   it('PUT: A account should be edited', async () => {
     const NEW_ACCOUNT_MOCK_PAYLOAD = {
       ...ACCOUNT_MOCK_PAYLOAD,
